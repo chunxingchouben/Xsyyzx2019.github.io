@@ -1,348 +1,209 @@
 <header id="top" class="header">
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>barrage</title>
-  <style>
-    .box{
-      width: 800px;
-      height: 400px;
-      margin:0 auto;
-    }
-    .barrage-container{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 30px;
-        cursor: default;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    .barrage-container-wrap{
-        display: table;
-        position: relative;
-        width: 500%;
-        height: 20%;
-        background: url(../img/bg.jpg) no-repeat center center scroll;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        background-size: cover;
-        -o-background-size: cover;
-    }
-    .barrage-item{
-        position:absolute;
-        top:0;
-        left: 100%;
-        white-space: nowrap;
-        cursor: pointer;
-        color:#fff;
-    }
-    .barrage-item .barrage-tip{
-        display: none;
-        position: absolute;
-        top:-26px;
-        padding: 7px 15px;
-        line-height: 12px;
-        font-size: 12px;
-        color: #f20606;
-        background-color: #fff;
-        white-space: nowrap;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        -webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
-        box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
-        -webkit-transform-origin: 15px 100%;
-        -ms-transform-origin: 15px 100%;
-        transform-origin: 15px 100%;
-        webkit-animation: tipScale cubic-bezier(.22,.58,.12,.98) .4s;
-        animation: tipScale cubic-bezier(.22,.58,.12,.98) .4s;
-      }
-    .send-wrap{
-      margin-top: 20px;
-    }
-    .input{
-        width: 300px;
-        height: 30px;
-        line-height: 30px;
-        outline: none;
-        -webkit-appearance: none;
-        border-radius: 5px;
-        padding:0;
-        padding-left: 10px;
-    }
-    .send-btn{
-        height: 38px;
-        line-height: 38px;
-        text-align: center;
-        font-weight: bold;
-        color: #fff;
-        background: #93d0ea;
-        text-shadow:1px 1px 1px #333;
-        border-radius: 5px;
-        margin:0 20px 20px 0;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-        padding:5px 15px;
-    }
-    @-webkit-keyframes tipScale{
-        0{
-          -webkit-transform: scale(0);
-           transform: scale(0);
-        }
-        50% {
-           -webkit-transform: scale(1.1);
-           transform: scale(1.1);
-        }
-        100% {
-          -webkit-transform: scale(1);
-          transform: scale(1);
-        }
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>弹幕</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <body>
-    <div class="box">
-    <div class="barrage-container-wrap clearfix">
-    <div class="barrage-container">
-    </div> 
-    </div>
+    
+  <div id='con' ></div>
     <h1 style="font-family:Microsoft Yahei;" align="center"><font color="white" style="font-size:60px">高顿双11成交金额</font></h1>
     <h2><font color="white" style="font-size:162px" align="center">￥22000000</font></h2>
     <h3><font color="white" style="font-size:40px" align="center">成都分公司成交30单CMA</font></h3>
     <h3><font color="white" style="font-size:40px" align="center">北京分公司john目前成交最多15单CMA</font></h3>
-    <div class="send-wrap">
-    <br>
-    <input type="text" class="input" placeholder="弹幕发送">
-    <span class="send-btn">发送</span>
-  </div> 
-</div>
-</body>
-<script>
-;(function(){
-  var barrageArray = [
-          {
-            url: '用户头像',
-            text: '优秀',
-            level: 10
-          },
-          {
-            url: '用户头像',
-            text: '兄弟们加油',
-            level: 10
-          },
-          {
-            url: '用户头像',
-            text: '我们已经遥遥领先了',
-            level: 10
-          },
-          {
-            url: '',
-            text: '再创新高！',
-            level: 10
-          },
-          {
-            url: '',
-            text: '真的强！',
-            level: 10
-          },
-           {
-            url: '',
-            text: '在冲一波！',
-            level: 10
-          },
-          {
-            url: '',
-            text: 'GOGOGO',
-            level: 10
-          },
-          {
-            url: '',
-            text: 'fighting！',
-            level: 10
-          },
-          {
-            url: '',
-            text: '双11冲鸭！',
-            level: 10
-          },
-          {
-            url: '',
-            text: '高顿铁军无敌',
-            level: 10
-          },
-      ];
-  var barrageColorArray = [
-    '#0099CC','#333333', '#009966','#FFFF66','#9933FF','#FFFF99','#CCCCFF','#CC9933','#FFFF66'
-  ];
-  var barrageTipWidth = 50; //提示语的长度
- 
-  var barrageBoxWrap = document.querySelector('.barrage-container-wrap');;
-  var barrageBox = document.querySelector('.barrage-container');
-  var inputBox = document.querySelector('.input');
-  var sendBtn = document.querySelector('.send-btn');
- 
-  //容器的宽高度
-  var barrageWidth = ~~window.getComputedStyle(barrageBoxWrap).width.replace('px','');
-  var barrageHeight = ~~window.getComputedStyle(barrageBoxWrap).height.replace('px','');
- 
-  //发送
-  function sendMsg(){
-    var inputValue = inputBox.value;
-    inputValue .replace(/\ +/g, "");
- 
-    if (inputValue.length <= 0) {
-        alert('请输入');
-        return false;
-    }
- 
-    //生成弹幕
-    createBarrage(inputValue,true);
-    inputBox.value = ''; 
-  }
-   
- 
-  //创建弹幕
-  function createBarrage(msg, isSendMsg){
-    var divNode = document.createElement('div');
-    var spanNode = document.createElement('span');
- 
-    divNode.innerHTML = msg;
-    divNode.classList.add('barrage-item');
-    barrageBox.appendChild(divNode);
- 
-    spanNode.innerHTML = '举报';
-    spanNode.classList.add('barrage-tip');
-    divNode.appendChild(spanNode);
- 
-    barrageOffsetLeft = getRandom(barrageWidth, barrageWidth*2);
-    barrageOffsetLeft = isSendMsg ? barrageWidth : barrageOffsetLeft
-    barrageOffsetTop = getRandom(10, barrageHeight-10);
-    barrageColor = barrageColorArray[Math.floor(Math.random()*(barrageColorArray.length))];
- 
-    //执行初始化滚动
-    initBarrage.call(divNode,{
-      left : barrageOffsetLeft,
-      top : barrageOffsetTop,
-      color : barrageColor
-    });
-  }
- 
-  //初始化弹幕移动(速度，延迟)
-  function initBarrage(obj) {
-    //初始化
-    obj.top = obj.top || 0;
-    obj.class = obj.color || '#fff';
-    this.style.left = obj.left + 'px';
-    this.style.top = obj.top + 'px';
-    this.style.color = obj.color;  
- 
-    //添加属性
-    this.distance = 0;
-    this.width = ~~window.getComputedStyle(this).width.replace('px','');
-    this.offsetLeft = obj.left;
-    this.timer = null;
- 
-    //弹幕子节点
-    var barrageChileNode = this.children[0];
-    barrageChileNode.style.left = (this.width-barrageTipWidth)/2 + 'px';
- 
-    //运动
-    barrageAnimate(this);
- 
-    //停止
-    this.onmouseenter = function(){
-      barrageChileNode.style.display= 'block';
-      cancelAnimationFrame(this.timer);
-    };
- 
-    this.onmouseleave = function(){
-      barrageChileNode.style.display = 'none';
-      barrageAnimate(this);
-    };
- 
-    //举报
-    barrageChileNode.onclick = function(){
-      alert('举报成功');
-    }
-  }
+
+  <script>
+    
+      
+var mybarrage = (function($) {
+   return {
+    create: function(config){
+        var style = '';
+        style += config.area.left ? ('left:'+ config.area.left+'px;'):'';
+        //style += config.area.right ? ('right:'+ config.area.right+'px;'):'';
+        //style += config.area.top ? ('top:'+ config.area.top+';'):'';
+        //style += 'bottom:'+ config.area.bottomNum +'%;';
+    
+        $("#con").append('<div id="barrage-wrapper" style="position:relative;z-index:100;'+ style +'"></div>');
+
+        //new一个弹幕管理器
+        var manage = new mybarrage.init.BarrageManager();
+
+        manage.load();
+    },
+    init: function(){
+        var json = [
+          { id: 2, fromUserName: '李寻欢', content: "梨花剑", fromUserIcon: "https://www.baidu.com/favicon.ico" },
+          { id: 3, fromUserName: '黄药师', content: "轻功", fromUserIcon: "https://www.baidu.com/favicon.ico" },
+          { id: 4, fromUserName: '周杰伦', content: "唱歌", fromUserIcon: "https://www.baidu.com/favicon.ico" },
+           { id: 5, fromUserName: '洪金宝', content: "功夫", fromUserIcon: "https://www.baidu.com/favicon.ico" }
+        ]
+        //弹幕管理器
+        function BarrageManager (options) {
+            this.opts = {
+                url       : [],
+                loadDelay : 5000 ,  // 轮询时间间隔
+            }
+
+            $.extend( this.opts , options);
+            //new一个弹幕队列集合
+            this.bc = new BarrageCollection();
+        }
+
+        //弹幕管理器加载数据
+        BarrageManager.prototype.load = function (data) {
+            var self = this ;
+
+            if(data == null){
+              data = self.opts.url;
+            }
+            
+            for(var i = 0 ; i < data.length ; i++) {
+              
+                //所有初始数据转化成弹幕对象，放进弹幕队列集合中
+                self.bc.add(new Barrage({
+                    id:data[i].id,
+                    name:data[i].fromUserName,
+                    text:data[i].content,
+                    icon:data[i].fromUserIcon
+                }));
+            }
+            //弹幕管理器开始工作
+            self.loop();
+        }
+
+        // 弹幕管理器工作
+        BarrageManager.prototype.loop = function () {
+            var len = this.bc.mq.length , self = this  ;
+            while (len--) {
+                // 弹幕队列集合
+                this.bc.mq[len].start(this.bc , len);
+            }   
+
+            // setTimeout(function () {
+            //     self.load();
+            // } , this.opts.loadDelay);
+        }
+
+        function BarrageCollection () {
+            this.mq = [] ;
+        }
+
+        BarrageCollection.prototype.add = function (barrage) {
+            this.mq.push(barrage);
+        }
+
+        //弹幕队列集合删除弹幕
+        BarrageCollection.prototype.remove = function (barrage) {
+            var index = this.mq.findIndex(function (item) {
+                return barrage.opts.id == item.opts.id ;
+            });
+            if(index != -1) {
+                this.mq.splice(index , 1);
+            }
+            barrage.opts.$el.remove();
+        }
+
+        function Barrage (options) {
+            this.opts = {
+                $el         : null ,
+                left        : 0 ,
+                bgColor     : [Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255)] ,
+                offset      : 1000 ,      // 使弹幕完全移出屏幕外
+                duration    : 10000 ,   // 弹幕从右往左移动的时间 
+                delayTime   : 1000 ,    // 弹幕延迟移动时间
+            };
+            $.extend( this.opts , options);
+            this.init();
+        }
+
+        Barrage.prototype.init = function () {
+
+            //this.opts.$el = $("<span class='barrageItem'><img src="+this.opts.icon+"><em>"+this.opts.name+":</em>"+this.opts.text+"</span>");
+            this.opts.$el = $("<span class='barrageItem'>"+this.opts.text+"</span>");
+            var top = Math.ceil(Math.random() * 10 );
+            this.opts.$el.css({
+                top:top * 40 +'px',
+                //backgroundColor:"rgb("+this.opts.bgColor.join(",")+")",
+                    color:"rgb("+this.opts.bgColor.join(",")+")",
+                //right:0,
+                position:'absolute'
+            });
+
+            var delay = Math.ceil(Math.random()*10);
+            this.opts.delayTime *= Math.abs(delay - 5);
+
+            //var dur = Math.ceil(Math.random() * 10);
+            // this.opts.duration += dur * 1000 ; 
+
+
+            $('#barrage-wrapper').append(this.opts.$el);
+            this.opts.left = -this.opts.$el.width() - this.opts.offset ;
+            
+        }
+
+            //弹幕开始移动
+        Barrage.prototype.start = function (bc , index) {
+            var self = this ;
+            
+        
+            setTimeout(function () {
+                self.move(bc);
+            }, this.opts.delayTime);
+        }
+
+        //弹幕移动
+        Barrage.prototype.move = function (bc) {
+            var self = this ;
+          // 弹幕队列集合删除这个弹幕
+            this.opts.$el.animate({left:'-150%'},this.opts.duration ,"linear", function () { bc.remove(self);});
+
+        }
+
+        return {
+            BarrageManager: BarrageManager,
+            BarrageCollection: BarrageCollection,
+            Barrage: Barrage
+        }
+    }()
+   }
+})($)
+    
+    var width = document.documentElement.offsetWidth || document.documentElement.offsetWidth||window.innerWidth
+    var BarrageManager = mybarrage.init.BarrageManager;
+    var Barrage = mybarrage.init.Barrage;
+        
+  function submit(){
+    let text = $('#custmerEnter').val();
+    let manage = new BarrageManager();
+
+        manage.load();
+
+        manage.bc.add(new Barrage({
+            id: +new Date(),
+            name: '张三风',
+            text: text,
+            icon: 'https://pic4.zhimg.com/da8e974dc_xs.jpg'
+        }));
+        manage.loop();
   
-  //弹幕动画
-  function barrageAnimate(obj){
-    move(obj);
- 
-    if(Math.abs(obj.distance) < obj.width+obj.offsetLeft){
-      obj.timer = requestAnimationFrame(function(){
-        barrageAnimate(obj);
-      });
-    }else{
-      cancelAnimationFrame(obj.timer);
-      //删除节点
-      obj.parentNode.removeChild(obj);
-    }
   }
- 
-  //移动
-  function move(obj){
-    obj.distance--;
-    obj.style.transform = 'translateX('+obj.distance+'px)';
-    obj.style.webkitTransform = 'translateX('+obj.distance+'px)';
-  }
- 
-  //随机获取高度
-  function getRandom(start, end){
-    return start +(Math.random() * (end - start));
-  }
- 
- 
-  /*******初始化事件**********/
-  //系统数据
-  barrageArray.forEach(function(item,index){
-    createBarrage(item.text, false);
-  });
- 
-  //点击发送
-  sendBtn.onclick = sendMsg;   //点击发送
- 
-  //回车
-  inputBox.onkeydown = function(e){
-    e = e|| window.event;
-    if(e.keyCode == 13){
-      send();
-    }
-  }
- 
-})()
- 
-//兼容写法
-(function() {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // Webkit中此取消方法的名字变了
-                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
- 
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-            var id = window.setTimeout(function() {
-                callback(currTime + timeToCall);
-            }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}());
+  mybarrage.create({
+        area:{
+            left: width,
+            //right: -10,
+            top: '5%'
+        }
+    }) 
+    
+    
+
+  </script>
+
+  <input type='text' id='custmerEnter' />
+  <button onclick='submit()'>提交</button>
+</body>
 </script>
 </header>
