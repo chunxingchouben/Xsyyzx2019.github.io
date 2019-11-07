@@ -180,6 +180,11 @@ var mybarrage = (function($) {
         
   function submit(){
     let text = $('#custmerEnter').val();
+    if(document.search.q.value=="custmerEnter")
+    alert("请输入")
+    this.search.q.focus();
+    return false;
+    
     let manage = new BarrageManager();
 
         manage.load();
@@ -207,7 +212,7 @@ var mybarrage = (function($) {
 <br>
 <br>
 <br>
-  <input type='text' placeholder="弹幕发送" >
+  <input type='text' id='custmerEnter' />
   <button onclick='submit()'>提交</button>
 </body>
 </script>
