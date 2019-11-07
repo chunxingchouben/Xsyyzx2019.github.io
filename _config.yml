@@ -23,7 +23,7 @@ sass:
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: # the subpath of your site, e.g. /blog
-title: <img src='https://i.loli.net/2019/11/06/SRQ4sD965uly8mq.jpg' width="500" height="140" />
+title: <img src='https://i.loli.net/2019/11/06/SRQ4sD965uly8mq.jpg' width="1600" height="180" />
 description: 
 keywords: 
 author:
