@@ -16,13 +16,12 @@
     <h1 style="font-family:Microsoft Yahei;" align="center"><font color="white" style="font-size:60px">高顿双11成交金额</font></h1>
     <br>
     <br>
-</marquee>
     <h2 align="center"><font color="white" style="font-size:162px">￥22000000</font></h2>
     <h3 align="center"><font color="white" style="font-size:40px" align="center">成都分公司成交30单CMA</font></h3>
     <h3 align="center"><font color="white" style="font-size:40px" align="center">北京分公司john目前成交最多15单CMA</font></h3>
     <textarea name="demo" id="demo" style= "background: transparent " rows="10" cols="35" >
     9:10北京分公司进账1单CMA
-    ''''''
+    $("#content").insertAtCaret($(this)
     9:09北京分公司进账1单CMA
     ''''''
     9:08北京分公司进账1单CMA
@@ -227,8 +226,34 @@ var mybarrage = (function($) {
         }
     }) 
     
-    
-
+(function($){
+    $.fn.extend({
+        insertAtCaret: function(myValue){
+            var $t=$(this)[0];
+            if (document.selection) {
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                this.focus();
+            }
+            else
+                if ($t.selectionStart || $t.selectionStart == '0') {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                }
+                else {
+                    this.value += myValue;
+                    this.focus();
+                }
+        }
+    })  
+})(jQuery);
   </script>
 </body>
 </script>
