@@ -1,13 +1,13 @@
-<header id="top" class="header">
 <?php
 mysql_connect("192.168.150.152", "root", "2012132144");
 $rs = mysql_query("set names gbk");
 mysql_select_db("gdcs");
 $result = mysql_query("select max(新会员总成交金额)cd from gdcs");
 ?>
-<html>
+<header id="top" class="header">
 <head><title>无标题</title></head>
 <body>
+<<<<<<< HEAD
 <center><h4>大类管理（一） >管理选项 1> 内容设置</h4></center>   
 <table width="100%" border="1" cellpadding="3" cellspacing="0" align="center" >
 <caption><h1>研发部人员信息</h1></caption>   
@@ -26,5 +26,4 @@ while($row = mysql_fetch_assoc($result)){
 ?>
 </table>
 </body>
-</html>
 </header>
