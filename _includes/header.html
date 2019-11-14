@@ -1,233 +1,30 @@
 <header id="top" class="header">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-    <title>弹幕</title>
-    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-    <style>
-          #demo{color:#F8F8FF;
-         }
-    </style>
-
-</head>
-
+<?php
+mysql_connect("192.168.150.152", "root", "2012132144");
+$rs = mysql_query("set names gbk");
+mysql_select_db("gdcs");
+$result = mysql_query("select max(新会员总成交金额)cd from gdcs");
+?>
+<html>
+<head><title>无标题</title></head>
 <body>
-    
-  <div id='con' ></div>
-    <h1 style="font-family:Microsoft Yahei;" align="center"><font color="white" style="font-size:60px">高顿双11成交金额</font></h1>
-    <br>
-    <br>
-    <h2 align="center"><font color="white" style="font-size:162px; margin-top：30%; margin:auto;">￥22000000</font></h2>
-    <h3 align="center"><font color="white" style="font-size:40px; margin-top：30%; margin:auto;" align="center">成都分公司成交30单CMA</font></h3>
-    <h3 align="center"><font color="white" style="font-size:40px;margin-top：30%; margin:auto;" align="center">北京分公司john目前成交最多15单CMAA</font></h3>
-    <textarea name="demo" id="demo" style= "background: transparent " rows="10" cols="50" >
-    9:10北京分公司进账1单CMA
-    ヾ(◍°∇°◍)ﾉﾞヾ(◍°∇°◍)ﾉﾞヾ(◍°∇°◍)ﾉﾞ
-    9:09北京分公司进账1单CMA
-    ヾ(≧O≦)〃嗷~ヾ(≧O≦)〃嗷~ヾ(≧O≦)〃嗷~
-    9:08北京分公司进账1单CMA
-    ヾ(◍°∇°◍)ﾉﾞヾ(◍°∇°◍)ﾉﾞヾ(◍°∇°◍)ﾉﾞ
-    9:07上海公司进账1单CMA
-    ヾ(≧O≦)〃嗷~ヾ(≧O≦)〃嗷~ヾ(≧O≦)〃嗷~
-    9:06上海公司进账1单CMA
-    ''''''
-    9:05上海公司进账1单CMA
-    ''''''
-    9:05上海公司进账1单CMA
-    ''''''
-    9:05上海公司进账1单CMA
-    ''''''
-    9:04上海公司进账1单CMA
-    ''''''
-    9:03上海公司进账1单CMA
-    </textarea>
+<center><h4>大类管理（一） >管理选项 1> 内容设置</h4></center>   
+<table width="100%" border="1" cellpadding="3" cellspacing="0" align="center" >
+<caption><h1>研发部人员信息</h1></caption>   
+<tr>
+<th colspan="1">编号</th>
 
-  <script>
-    
-      
-var mybarrage = (function($) {
-   return {
-    create: function(config){
-        var style = '';
-        style += config.area.left ? ('left:'+ config.area.left+'px;'):'';
-        //style += config.area.right ? ('right:'+ config.area.right+'px;'):'';
-        //style += config.area.top ? ('top:'+ config.area.top+';'):'';
-        //style += 'bottom:'+ config.area.bottomNum +'%;';
-    
-        $("#con").append('<div id="barrage-wrapper" style="position:relative;z-index:100;'+ style +'"></div>');
-
-        //new一个弹幕管理器
-        var manage = new mybarrage.init.BarrageManager();
-
-        manage.load();
-    },
-    init: function(){
-        var json = [
-          { id: 2, fromUserName: '李寻欢', content: "梨花剑", fromUserIcon: "https://www.baidu.com/favicon.ico" },
-          { id: 3, fromUserName: '黄药师', content: "轻功", fromUserIcon: "https://www.baidu.com/favicon.ico" },
-          { id: 4, fromUserName: '周杰伦', content: "唱歌", fromUserIcon: "https://www.baidu.com/favicon.ico" },
-           { id: 5, fromUserName: '洪金宝', content: "功夫", fromUserIcon: "https://www.baidu.com/favicon.ico" }
-        ]
-        //弹幕管理器
-        function BarrageManager (options) {
-            this.opts = {
-                url       : [],
-                loadDelay : 5000 ,  // 轮询时间间隔
-            }
-
-            $.extend( this.opts , options);
-            //new一个弹幕队列集合
-            this.bc = new BarrageCollection();
-        }
-
-        //弹幕管理器加载数据
-        BarrageManager.prototype.load = function (data) {
-            var self = this ;
-
-            if(data == null){
-              data = self.opts.url;
-            }
-            
-            for(var i = 0 ; i < data.length ; i++) {
-              
-                //所有初始数据转化成弹幕对象，放进弹幕队列集合中
-                self.bc.add(new Barrage({
-                    id:data[i].id,
-                    name:data[i].fromUserName,
-                    text:data[i].content,
-                    icon:data[i].fromUserIcon
-                }));
-            }
-            //弹幕管理器开始工作
-            self.loop();
-        }
-
-        // 弹幕管理器工作
-        BarrageManager.prototype.loop = function () {
-            var len = this.bc.mq.length , self = this  ;
-            while (len--) {
-                // 弹幕队列集合
-                this.bc.mq[len].start(this.bc , len);
-            }   
-
-            // setTimeout(function () {
-            //     self.load();
-            // } , this.opts.loadDelay);
-        }
-
-        function BarrageCollection () {
-            this.mq = [] ;
-        }
-
-        BarrageCollection.prototype.add = function (barrage) {
-            this.mq.push(barrage);
-        }
-
-        //弹幕队列集合删除弹幕
-        BarrageCollection.prototype.remove = function (barrage) {
-            var index = this.mq.findIndex(function (item) {
-                return barrage.opts.id == item.opts.id ;
-            });
-            if(index != -1) {
-                this.mq.splice(index , 1);
-            }
-            barrage.opts.$el.remove();
-        }
-
-        function Barrage (options) {
-            this.opts = {
-                $el         : null ,
-                left        : 0 ,
-                bgColor     : [Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255)] ,
-                offset      : 1000 ,      // 使弹幕完全移出屏幕外
-                duration    : 10000 ,   // 弹幕从右往左移动的时间 
-                delayTime   : 1000 ,    // 弹幕延迟移动时间
-            };
-            $.extend( this.opts , options);
-            this.init();
-        }
-
-        Barrage.prototype.init = function () {
-
-            //this.opts.$el = $("<span class='barrageItem'><img src="+this.opts.icon+"><em>"+this.opts.name+":</em>"+this.opts.text+"</span>");
-            this.opts.$el = $("<span class='barrageItem'>"+this.opts.text+"</span>");
-            var top = Math.ceil(Math.random() * 10 );
-            this.opts.$el.css({
-                top:top * 40 +'px',
-                //backgroundColor:"rgb("+this.opts.bgColor.join(",")+")",
-                    color:"rgb("+this.opts.bgColor.join(",")+")",
-                //right:0,
-                position:'absolute'
-            });
-
-            var delay = Math.ceil(Math.random()*10);
-            this.opts.delayTime *= Math.abs(delay - 5);
-
-            //var dur = Math.ceil(Math.random() * 10);
-            // this.opts.duration += dur * 1000 ; 
-
-
-            $('#barrage-wrapper').append(this.opts.$el);
-            this.opts.left = -this.opts.$el.width() - this.opts.offset ;
-            
-        }
-
-            //弹幕开始移动
-        Barrage.prototype.start = function (bc , index) {
-            var self = this ;
-            
-        
-            setTimeout(function () {
-                self.move(bc);
-            }, this.opts.delayTime);
-        }
-
-        //弹幕移动
-        Barrage.prototype.move = function (bc) {
-            var self = this ;
-          // 弹幕队列集合删除这个弹幕
-            this.opts.$el.animate({left:'-150%'},this.opts.duration ,"linear", function () { bc.remove(self);});
-
-        }
-
-        return {
-            BarrageManager: BarrageManager,
-            BarrageCollection: BarrageCollection,
-            Barrage: Barrage
-        }
-    }()
-   }
-})($)
-    
-    var width = document.documentElement.offsetWidth || document.documentElement.offsetWidth||window.innerWidth
-    var BarrageManager = mybarrage.init.BarrageManager;
-    var Barrage = mybarrage.init.Barrage;
-        
-  function submit(){
-    let text = $('#custmerEnter').val();
-    
-    let manage = new BarrageManager();
-
-        manage.load();
-
-        manage.bc.add(new Barrage({
-            id: +new Date(),
-            name: '张三风',
-            text: text,
-            icon: 'https://pic4.zhimg.com/da8e974dc_xs.jpg'
-        }));
-        manage.loop();
-  
-  }
-  mybarrage.create({
-        area:{
-            left: width,
-            //right: -10,
-            top: '5%'
-        }
-    }) 
-    
-  </script>
+</tr>
+<?php
+while($row = mysql_fetch_assoc($result)){
+?>
+<tr>
+<th colspan="1"><?php echo $row['cd']; ?></th>
+</tr>
+<?php
+}
+?>
+</table>
 </body>
-</script>
+</html>
 </header>
