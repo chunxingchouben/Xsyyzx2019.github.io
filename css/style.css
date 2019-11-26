@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: black;
+  background: url(../img/bg.jpg) no-repeat center center scroll;
 }
 canvas {
   position: absolute;
