@@ -1,29 +1,22 @@
-<?php
-mysql_connect("192.168.150.152", "root", "2012132144");
-$rs = mysql_query("set names gbk");
-mysql_select_db("gdcs");
-$result = mysql_query("select max(新会员总成交金额)cd from gdcs");
-?>
 <header id="top" class="header">
-<head><title>无标题</title></head>
-<body>
-<<<<<<< HEAD
-<center><h4>大类管理（一） >管理选项 1> 内容设置</h4></center>   
-<table width="100%" border="1" cellpadding="3" cellspacing="0" align="center" >
-<caption><h1>研发部人员信息</h1></caption>   
-<tr>
-<th colspan="1">编号</th>
+<html lang="en" >
+<head>
+<h1>高顿双旦大战</h1>
+<link rel="stylesheet" href="css/style.css">
 
-</tr>
-<?php
-while($row = mysql_fetch_assoc($result)){
-?>
-<tr>
-<th colspan="1"><?php echo $row['cd']; ?></th>
-</tr>
-<?php
-}
-?>
-</table>
+</head>
+<body>
+<div style="text-align:center;clear:both;">
+<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script>
+</div>
+<canvas></canvas>
+<canvas></canvas>
+<canvas></canvas>
+
+<script  src="js/yanhua.js"></script>
+
+</body>
+</html>
 </body>
 </header>
