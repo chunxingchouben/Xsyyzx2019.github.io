@@ -113,7 +113,7 @@ let counter = 0;
 c2.width = c3.width = window.innerWidth;
 c2.height = c3.height = window.innerHeight;
 ctx1.fillStyle = '#000';
-const text = '￥11759290';
+const text = '恭喜杭州分公司成交59单';
 let textWidth = 99999999;
 
 while (textWidth > window.innerWidth) {
